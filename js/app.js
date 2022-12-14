@@ -30,6 +30,11 @@
  * 
 */
 
+// Find the sections within the DOM
+
+// Set the Section class to Active
+
+// Set the nav button to active */
 
 
 /**
@@ -39,6 +44,16 @@
 */
 
 // build the nav
+
+    // find the nav sections
+
+    // update the nav list
+
+    // create new items
+
+    // add new items to dictionary
+
+    // add new items to menu
 
 
 // Add class 'active' to section when near top of viewport
