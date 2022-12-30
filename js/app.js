@@ -35,7 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
    * 
   */
 
-  // Get sections from the DOM
+ /**
+* @description finds all <section> elements in DOM
+* @returns {NodeList} of all sections
+*/
   function getSections() {
       return document.querySelectorAll('section');
     }
