@@ -18,8 +18,13 @@
  * Great to have comments before crucial code sections within the procedure.
 */
 
+// get all section elements
 const sections = document.querySelectorAll('section');
+// get ul.navbar__list
+const navList = document.getElementById('navbar__list');
+// get all a elements
 const links = document.querySelectorAll('a');
+// get all href elements
 const hrefs = document.querySelectorAll('href');
 
 // Wait until the DOM is loaded before executing code
@@ -41,8 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
     */
   
     /**
-     * @description adds active class to section and nav menu when it is in viewport
-     * @returns {NodeList} of all sections
+     * @description add/remove appropriate active class to section and nav menu when it is in viewport
+     * @returns toggles section class="your-active-class", a class="active"
      */
     
     // Add class 'active' to section when it is near top of viewport
@@ -69,11 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * 
     */
   
-    // build the nav
-  
-    // Query the DOM for UL with id="navbar__list"
-    const navList = document.getElementById('navbar__list');
-  
+    // build the nav  
     // Iterate through the section elements and create a nav menu item for each
     sections.forEach(section => {
   
@@ -104,7 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
     */
   
     // Scroll to anchor ID using scrollTO event
-  
     // Add a click event listener to each link
     links.forEach((link) => {
         link.addEventListener('click', (event) => {
@@ -122,5 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         });
       });
+
+    // Add an event listener for browser scroll, fire makeActive function when section in viewport
     window.addEventListener('scroll', makeActive);
-  });
+});

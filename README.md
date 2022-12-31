@@ -3,6 +3,8 @@
 ## Table of Contents
 
 * [Instructions](#instructions)
+* [Description](#description)
+* [Strategy](#strategy)
 
 ## Instructions
 
@@ -14,10 +16,12 @@ For specific, detailed instructions, look at the project instructions in the Uda
 
 ## Description
 
-Conversion of a static landing page into an interactive one.
+Conversion of a static landing page into an interactive one using javascript.
 
 ## Strategy
 
-The DOM is queried for all <section> elements.  Utilizing the id and data-nav attributes, a navbar is created as an <ul>.
+The DOM is queried for all <section> elements.  Utilizing the id and data-nav attributes, a navbar is created within ul.navbar__list.  Links are <li>.
 
-IntersectionObserver 
+An event listener uses scroll and getBoundingClientRect() checks to see if the section is in the viewport.  This toggles the class of the section.your-active-class and a.active as appropriate.
+
+Another event listener uses clicks on the navbar to set active state of the menu items and uses scrollTo() to create a smooth scrolling effect on click.
