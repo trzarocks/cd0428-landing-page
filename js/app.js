@@ -18,122 +18,111 @@
  * Great to have comments before crucial code sections within the procedure.
 */
 
+// get all section elements
+const sections = document.querySelectorAll('section');
+// get ul.navbar__list
+const navList = document.getElementById('navbar__list');
+// get all a elements
+const links = document.querySelectorAll('a');
+// get all href elements
+const hrefs = document.querySelectorAll('href');
+
 // Wait until the DOM is loaded before executing code
 
 document.addEventListener('DOMContentLoaded', function() {
 
-  /**
-   * Define Global Variables
-   * 
-  */
-  /*eslint-env browser*/
+    /**
+     * Define Global Variables
+     * 
+    */
+    /*eslint-env browser*/
+  
 
 
-  /**
-   * End Global Variables
-   * Start Helper Functions
-   * 
-  */
-
- /**
-* @description finds all <section> elements in DOM
-* @returns {NodeList} of all sections
-*/
-  function getSections() {
-      return document.querySelectorAll('section');
+    /**
+     * End Global Variables
+     * Start Helper Functions
+     * 
+    */
+  
+    /**
+     * @description add/remove appropriate active class to section and nav menu when it is in viewport
+     * @returns toggles section class="your-active-class", a class="active"
+     */
+    
+    // Add class 'active' to section when it is near top of viewport
+    function makeActive() {
+        for (const section of sections) {
+            const box = section.getBoundingClientRect();
+            // You can play with the values in the "if" condition to further make it more accurate. 
+            if (box.top <= 150 && box.bottom >= 150) {
+            // Apply active state on the current section and the corresponding Nav link.
+                section.classList.add('your-active-class');
+                const navLink = document.querySelector(`a[href="#${section.id}"]`);
+                navLink.classList.add('active');
+            } else {
+            // Remove active state from other section and corresponding Nav link.
+                section.classList.remove('your-active-class');
+                const navLink = document.querySelector(`a[href="#${section.id}"]`);
+                navLink.classList.remove('active');
+            }
+        }
     }
-
-  /**
-   * End Helper Functions
-   * Begin Main Functions
-   * 
-  */
-
-  // build the nav
-
-  // Query the DOM for UL with id="navbar__list"
-  const navList = document.getElementById('navbar__list');
-
-  // Iterate through the section elements and create a nav menu item for each
-  getSections().forEach(section => {
-
-      // Get the id and data-nav attributes of the section element
-      const id = section.getAttribute('id');
-      const navText = section.getAttribute('data-nav');
-
-      // Create the list item element
-      const li = document.createElement('li');
-
-      // Create the link element, href,  text, class
-      const a = document.createElement('a');
-      a.setAttribute('href', `#${id}`);
-      a.textContent = navText;
-      a.setAttribute('class', 'menu__link')
-
-      // Add the link to the list item
-      li.appendChild(a);
-    
-      // Add the list item to the nav list
-      navList.appendChild(li);
-  });
-
-  /**
-   * End Main Functions
-   * Begin Events
-   * 
-  */
-
-  // Select the a elements and the sections
-  const links = document.querySelectorAll('a');
-
-  // Create an intersection observer
-  const observer = new IntersectionObserver((entries) => {
-    // Loop through the entries
-    entries.forEach((entry) => {
-      // Check if the entry is intersecting with the viewport
-      if (entry.isIntersecting) {
-        // Get the target element
-        const target = entry.target;
-
-        // Loop through the links
-        links.forEach((link) => {
-          // If the link corresponds to the target element, set its class to "active"
-          if (link.hash === `#${target.id}`) {
-            link.classList.add('active');
-          } else {
-            // Otherwise, remove active class
-            link.classList.remove('active');
-          }
-        });
-      }
+    /**
+     * End Helper Functions
+     * Begin Main Functions
+     * 
+    */
+  
+    // build the nav  
+    // Iterate through the section elements and create a nav menu item for each
+    sections.forEach(section => {
+  
+        // Get the id and data-nav attributes of the section element
+        const id = section.getAttribute('id');
+        const navText = section.getAttribute('data-nav');
+  
+        // Create the list item element
+        const li = document.createElement('li');
+  
+        // Create the link element, href,  text, class
+        const a = document.createElement('a');
+        a.setAttribute('href', `#${id}`);
+        a.textContent = navText;
+        a.setAttribute('class', 'menu__link')
+  
+        // Add the link to the list item
+        li.appendChild(a);
+      
+        // Add the list item to the nav list
+        navList.appendChild(li);
     });
-  }, {
-      //defines how much of section should be in viewport.  25% looked good on all device sizes
-      threshold: 0.25,
-  });
-
-  // Observe each section
-  getSections().forEach((section) => {
-    observer.observe(section);
-  });
-
-  // Scroll to anchor ID using scrollTO event
-
-  // Add a click event listener to each link
-  links.forEach((link) => {
-      link.addEventListener('click', (event) => {
-        // Prevent the default link behavior
-        event.preventDefault();
-    
-        // Get the target element
-        const targetId = link.hash;
-        const target = document.querySelector(targetId);
-    
-        // Smoothly scroll to the target element using ScrollTo
-        window.scrollTo({
-          top: target.offsetTop,
-          behavior: 'smooth',
+  
+    /**
+     * End Main Functions
+     * Begin Events
+     * 
+    */
+  
+    // Scroll to anchor ID using scrollTO event
+    // Add a click event listener to each link
+    links.forEach((link) => {
+        link.addEventListener('click', (event) => {
+          // Prevent the default link behavior
+          event.preventDefault();
+      
+          // Get the target element
+          const targetId = link.hash;
+          const target = document.querySelector(targetId);
+      
+          // Smoothly scroll to the target element using ScrollTo
+          window.scrollTo({
+            top: target.offsetTop,
+            behavior: 'smooth',
+          });
         });
       });
-    });
+
+    // Add an event listener for browser scroll, fire makeActive function when section in viewport
+    window.addEventListener('scroll', makeActive);
 });
