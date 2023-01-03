@@ -20,7 +20,7 @@ Conversion of a static landing page into an interactive one using javascript.
 
 ## Strategy
 
-The DOM is queried for all <section> elements.  Utilizing the id and data-nav attributes, a navbar is created within ul.navbar__list.  Links are <li>.
+The DOM is queried for all <section> elements.  Utilizing the id and data-nav attributes, a navbar is created within ul.navbar__list.  Links are li.
 
 An event listener uses scroll and getBoundingClientRect() checks to see if the section is in the viewport.  This toggles the class of the section.your-active-class and a.active as appropriate.
 
